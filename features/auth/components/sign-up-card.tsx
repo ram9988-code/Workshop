@@ -24,8 +24,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { SignUpSchema } from "../schema";
+import { useRegister } from "../api/use-register";
 
 const SignUpCard = () => {
+  const { mutate } = useRegister();
   const form = useForm<z.infer<typeof SignUpSchema>>({
     resolver: zodResolver(SignUpSchema),
     defaultValues: {
@@ -36,7 +38,7 @@ const SignUpCard = () => {
   });
 
   const onSubmit = (values: z.infer<typeof SignUpSchema>) => {
-    console.log("onSubmit", values);
+    mutate({ json: values });
   };
   return (
     <Card className="w-full md:w-[487px] border-none shadow-none">
@@ -139,7 +141,7 @@ const SignUpCard = () => {
       <CardContent className="p-7 flex items-center justify-center">
         <p>
           Already have an account?{" "}
-          <Link href={"/sign-In"}>
+          <Link href={"/sign-in"}>
             <span className="text-blue-700">Sign In</span>
           </Link>
         </p>
