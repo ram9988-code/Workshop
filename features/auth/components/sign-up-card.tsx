@@ -1,3 +1,5 @@
+"use client";
+
 import { z } from "zod";
 
 import { FcGoogle } from "react-icons/fc";
@@ -25,9 +27,10 @@ import {
 } from "@/components/ui/form";
 import { SignUpSchema } from "../schema";
 import { useRegister } from "../api/use-register";
+import { Loader } from "lucide-react";
 
 const SignUpCard = () => {
-  const { mutate } = useRegister();
+  const { mutate, isPending } = useRegister();
   const form = useForm<z.infer<typeof SignUpSchema>>({
     resolver: zodResolver(SignUpSchema),
     defaultValues: {
@@ -106,8 +109,12 @@ const SignUpCard = () => {
                 </FormItem>
               )}
             />
-            <Button disabled={false} size={"lg"} className="w-full">
-              Create account
+            <Button disabled={isPending} size={"lg"} className="w-full">
+              {isPending ? (
+                <Loader className="size-4 animate-spin text-muted-foreground" />
+              ) : (
+                "Create account"
+              )}
             </Button>
           </form>
         </Form>
@@ -117,7 +124,7 @@ const SignUpCard = () => {
       </div>
       <CardContent className="space-y-2">
         <Button
-          disabled={false}
+          disabled={isPending}
           className="w-full mt-4"
           variant={"secondary"}
           size={"lg"}
@@ -126,7 +133,7 @@ const SignUpCard = () => {
           Login with Google
         </Button>
         <Button
-          disabled={false}
+          disabled={isPending}
           className="w-full mt-4"
           variant={"secondary"}
           size={"lg"}

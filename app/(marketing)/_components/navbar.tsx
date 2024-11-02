@@ -1,9 +1,15 @@
 import Logo from "@/components/logo";
 import { Button } from "@/components/ui/button";
+import UserButton from "@/features/auth/components/user-button";
 import Link from "next/link";
+import { Models } from "node-appwrite";
 import React from "react";
 
-export const Navbar = () => {
+interface NavbarProps {
+  user: Models.User<Models.Preferences>;
+}
+
+export const Navbar = ({ user }: NavbarProps) => {
   return (
     <div className="fixed top-0 w-full h-14 px-20 border-b shadow-sm bg-white flex items-center">
       <div className="md:max-w-screen-2xl mx-auto flex justify-between w-full items-center">
@@ -16,6 +22,7 @@ export const Navbar = () => {
             <Link href={"/sign-up"}>Create Account</Link>
           </Button>
         </div>
+        <UserButton />
       </div>
     </div>
   );

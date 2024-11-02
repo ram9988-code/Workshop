@@ -1,3 +1,5 @@
+"use client";
+
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -19,9 +21,11 @@ import {
 import Link from "next/link";
 import { loginSchema } from "../schema";
 import { useLogin } from "../api/use-login";
+import { Loader } from "lucide-react";
 
 const SignInCard = () => {
-  const { mutate } = useLogin();
+  const { mutate, isPending } = useLogin();
+
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -32,7 +36,6 @@ const SignInCard = () => {
 
   const onSubmit = (values: z.infer<typeof loginSchema>) => {
     mutate({ json: values });
-    console.log("onSubmit", values);
   };
   return (
     <Card className="w-full md:w-[487px] border-none shadow-none">
@@ -75,8 +78,12 @@ const SignInCard = () => {
               )}
             />
 
-            <Button disabled={false} size={"lg"} className="w-full">
-              Login
+            <Button disabled={isPending} size={"lg"} className="w-full">
+              {isPending ? (
+                <Loader className="size-4 animate-spin text-muted-foreground" />
+              ) : (
+                "Login"
+              )}
             </Button>
           </form>
         </Form>
@@ -86,7 +93,7 @@ const SignInCard = () => {
       </div>
       <CardContent className="space-y-2">
         <Button
-          disabled={false}
+          disabled={isPending}
           className="w-full mt-4"
           variant={"secondary"}
           size={"lg"}
@@ -95,7 +102,7 @@ const SignInCard = () => {
           Login with Google
         </Button>
         <Button
-          disabled={false}
+          disabled={isPending}
           className="w-full mt-4"
           variant={"secondary"}
           size={"lg"}

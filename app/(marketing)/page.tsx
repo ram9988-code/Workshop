@@ -1,21 +1,9 @@
-"use client";
 import { Button } from "@/components/ui/button";
-import { useCurrent } from "@/features/auth/api/use-current";
 import { Medal } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import React, { useEffect } from "react";
+import React from "react";
 
 const MarketingPage = () => {
-  const router = useRouter();
-  const { data, isLoading } = useCurrent();
-
-  useEffect(() => {
-    if (!data && !isLoading) {
-      router.push("/sign-in");
-    }
-  }, [data, isLoading, router]);
-
   return (
     <div className="flex items-center justify-center flex-col">
       <div className="flex items-center justify-center flex-col">
