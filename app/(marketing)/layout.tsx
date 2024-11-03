@@ -11,7 +11,7 @@ const MarketingLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="h-full bg-slate-100">
       <Navbar user={user} />
-      <main className="pt-40 pb-20 bg-slate-100">{children}</main>
+      <main className="pt-40 pb-20">{children}</main>
       <Footer />
     </div>
   );
