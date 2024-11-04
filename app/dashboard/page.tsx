@@ -1,9 +1,15 @@
+import { getCurrent } from "@/features/auth/action";
+import CreateWorkspaceForm from "@/features/workspaces/components/create-workspace-form";
+import { redirect } from "next/navigation";
 import React from "react";
 
-const Dashboard = () => {
+const Dashboard = async () => {
+  const user = await getCurrent();
+  if (!user) redirect("/sign-in");
+
   return (
     <div className="flex items-center justify-center flex-col">
-      <h1>DashBoard</h1>
+      <CreateWorkspaceForm />
     </div>
   );
 };

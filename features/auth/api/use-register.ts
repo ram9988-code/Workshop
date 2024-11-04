@@ -3,6 +3,7 @@ import { InferRequestType, InferResponseType } from "hono";
 import { useRouter } from "next/navigation";
 
 import { client } from "@/lib/rpc";
+import { toast } from "sonner";
 
 type ResponseType = InferResponseType<
   (typeof client.api.auth.register)["$post"]
@@ -16,11 +17,20 @@ export const useRegister = () => {
   const mutation = useMutation<ResponseType, Error, RequestType>({
     mutationFn: async ({ json }) => {
       const response = await client.api.auth.register["$post"]({ json });
+
+      if (!response.ok) {
+        throw new Error("Failed to register");
+      }
       return await response.json();
     },
     onSuccess: () => {
+      toast.success("Register successfully");
       router.refresh();
       queryClient.invalidateQueries({ queryKey: ["current"] });
+    },
+    onError: (error) => {
+      toast.error("Failed to register");
+      toast.error(error.message);
     },
   });
   return mutation;
