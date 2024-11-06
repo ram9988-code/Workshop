@@ -151,10 +151,9 @@ const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
                   Cancel
                 </Button>
                 <Button type="submit" size={"lg"} disabled={isPending}>
-                  {isPending ? (
+                  Create Workspace{" "}
+                  {isPending && (
                     <Loader className="size-4 animate-spin text-muted-foreground" />
-                  ) : (
-                    "Create Workspace"
                   )}
                 </Button>
               </div>
