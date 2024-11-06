@@ -23,7 +23,7 @@ import { createWorkspceSchema } from "../schema";
 import { useCreateWorkspace } from "../api/use-create-workspace";
 import { Avatar } from "@/components/ui/avatar";
 import { AvatarFallback } from "@radix-ui/react-avatar";
-import { ImageIcon } from "lucide-react";
+import { ImageIcon, Loader } from "lucide-react";
 
 interface CreateWorkspaceFormProps {
   onCancel?: () => void;
@@ -151,7 +151,11 @@ const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
                   Cancel
                 </Button>
                 <Button type="submit" size={"lg"} disabled={isPending}>
-                  Create Workspace
+                  {isPending ? (
+                    <Loader className="size-4 animate-spin text-muted-foreground" />
+                  ) : (
+                    "Create Workspace"
+                  )}
                 </Button>
               </div>
             </div>
