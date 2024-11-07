@@ -5,6 +5,9 @@ import React, { useRef } from "react";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
 import { z } from "zod";
+import { AvatarFallback } from "@radix-ui/react-avatar";
+import { ImageIcon, Loader } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import DotteSeparator from "@/components/dotted-separator";
@@ -18,18 +21,17 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Avatar } from "@/components/ui/avatar";
 
 import { createWorkspceSchema } from "../schema";
 import { useCreateWorkspace } from "../api/use-create-workspace";
-import { Avatar } from "@/components/ui/avatar";
-import { AvatarFallback } from "@radix-ui/react-avatar";
-import { ImageIcon, Loader } from "lucide-react";
 
 interface CreateWorkspaceFormProps {
   onCancel?: () => void;
 }
 
 const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
+  const router = useRouter();
   const { mutate, isPending } = useCreateWorkspace();
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -46,8 +48,15 @@ const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
       image: values.image instanceof File ? values.image : "",
     };
 
-    mutate({ form: finalValues });
-    form.reset();
+    mutate(
+      { form: finalValues },
+      {
+        onSuccess: ({ data }) => {
+          form.reset();
+          router.push(`/dashboard/workspaces/${data.$id}`);
+        },
+      }
+    );
     //console.log(values);
   };
 
