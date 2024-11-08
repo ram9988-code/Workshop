@@ -22,6 +22,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Avatar } from "@/components/ui/avatar";
+import { cn } from "@/lib/utils";
 
 import { createWorkspceSchema } from "../schema";
 import { useCreateWorkspace } from "../api/use-create-workspace";
@@ -75,7 +76,7 @@ const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
         </CardTitle>
       </CardHeader>
       <div className="px-7">
-        <DotteSeparator className="p-7" />
+        <DotteSeparator />
       </div>
       <CardContent className="p-7">
         <Form {...form}>
@@ -156,6 +157,7 @@ const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
                   variant={"secondary"}
                   onClick={onCancel}
                   disabled={isPending}
+                  className={cn(!onCancel && "invisible")}
                 >
                   Cancel
                 </Button>

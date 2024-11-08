@@ -44,6 +44,7 @@ const app = new Hono()
       const { name, image } = c.req.valid("form");
 
       let uploadImageUrl: string | undefined;
+      //console.log(image);
 
       if (image instanceof File) {
         const file = await storage.createFile(IMAGES_ID, ID.unique(), image);

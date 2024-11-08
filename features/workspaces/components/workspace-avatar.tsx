@@ -1,7 +1,8 @@
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { cn } from "@/lib/utils";
 import Image from "next/image";
 import React from "react";
+
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { cn } from "@/lib/utils";
 
 interface WorkspaceAvatarProps {
   image?: string;
@@ -9,6 +10,7 @@ interface WorkspaceAvatarProps {
   className?: string;
 }
 const WorkspaceAvatar = ({ name, className, image }: WorkspaceAvatarProps) => {
+  console.log(image);
   if (image) {
     return (
       <div className={cn("size-10 relative rounded-md overflow-hidden")}>
