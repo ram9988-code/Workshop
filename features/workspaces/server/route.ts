@@ -8,7 +8,8 @@ import { DATABASE_ID, IMAGES_ID, MEMBERS_ID, WORKSPACES_ID } from "@/config";
 import { MemberRole } from "@/features/members/types";
 import { generateInviteCode } from "@/lib/utils";
 
-import { createWorkspceSchema } from "../schema";
+import { createWorkspceSchema, updateWorkspceSchema } from "../schema";
+import { getMember } from "@/features/members/utils";
 
 const app = new Hono()
   .get("/", sessionMiddleware, async (c) => {
@@ -74,6 +75,51 @@ const app = new Hono()
         role: MemberRole.ADMIN,
       });
 
+      return c.json({ data: workspace });
+    }
+  )
+  .patch(
+    "/:workspaceId",
+    sessionMiddleware,
+    zValidator("form", updateWorkspceSchema),
+    async (c) => {
+      const databases = c.get("databases");
+      const storage = c.get("storage");
+      const user = c.get("user");
+
+      const { workspaceId } = c.req.param();
+      const { name, image } = c.req.valid("form");
+
+      const member = await getMember({
+        databases,
+        workspaceId,
+        userId: user.$id,
+      });
+
+      if (!member || member.role !== MemberRole.ADMIN) {
+        return c.json({ error: "Unauthorized" }, 401);
+      }
+
+      let uploadImageUrl: string | "";
+
+      if (image instanceof File) {
+        const file = await storage.createFile(IMAGES_ID, ID.unique(), image);
+
+        const arrayBuffer = await storage.getFilePreview(IMAGES_ID, file.$id);
+
+        uploadImageUrl = `data:image/png;base64,${Buffer.from(
+          arrayBuffer
+        ).toString("base64")}`;
+      } else {
+        uploadImageUrl = image || "";
+      }
+
+      const workspace = await databases.updateDocument(
+        DATABASE_ID,
+        WORKSPACES_ID,
+        workspaceId,
+        { name, imageUrl: uploadImageUrl }
+      );
       return c.json({ data: workspace });
     }
   );
