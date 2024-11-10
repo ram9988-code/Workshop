@@ -4,7 +4,7 @@ import Link from "next/link";
 
 import Logo from "@/components/logo";
 import { Button } from "@/components/ui/button";
-import { getCurrent } from "@/features/auth/action";
+import { getCurrent } from "@/features/auth/queries";
 import UserButton from "@/features/auth/components/user-button";
 
 export const Navbar = async () => {
