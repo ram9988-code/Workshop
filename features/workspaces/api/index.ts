@@ -9,3 +9,6 @@ export { useDeleteWorkspace } from "./use-delete-workspace";
 
 //Reset the invite code for the workspace
 export { useResetInviteCode } from "./use-reset-invite-code";
+
+//Join a workspace
+export { useJoinWorkspace } from "./use-join-workspace";

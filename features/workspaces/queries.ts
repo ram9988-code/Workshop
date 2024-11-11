@@ -64,3 +64,23 @@ export const getWorkspace = async ({ workspaceId }: GetWorkspaceId) => {
     return null;
   }
 };
+
+interface GetWorkspaceInfoId {
+  workspaceId: string;
+}
+
+export const getWorkspaceInfo = async ({ workspaceId }: GetWorkspaceInfoId) => {
+  try {
+    const { databases } = await createSessionClient();
+
+    const workspace = await databases.getDocument<Workspace>(
+      DATABASE_ID,
+      WORKSPACES_ID,
+      workspaceId
+    );
+    return { name: workspace.name };
+  } catch (err: any) {
+    console.log(`Failed to excute credentials ${err.message}`);
+    return null;
+  }
+};
