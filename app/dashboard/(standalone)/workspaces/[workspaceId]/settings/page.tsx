@@ -13,10 +13,13 @@ interface WorkspaceIdSettingPageProps {
 const WorkspaceIdSettingPage = async ({
   params,
 }: WorkspaceIdSettingPageProps) => {
+  const { workspaceId } = await params;
   const user = await getCurrent();
   if (!user) redirect("/sign-in");
 
-  const initialValues = await getWorkspace({ workspaceId: params.workspaceId });
+  const initialValues = await getWorkspace({
+    workspaceId: workspaceId,
+  });
 
   if (!initialValues) redirect("/dashboard/workspaces/");
   return (

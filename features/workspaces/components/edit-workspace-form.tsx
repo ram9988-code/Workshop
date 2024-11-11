@@ -59,7 +59,7 @@ const EditWorkspaceForm = ({
       { param: { workspaceId: initialValues.$id } },
       {
         onSuccess: () => {
-          router.push("/dashboard/workspaces/");
+          window.location.href = "/dashboard";
         },
       }
     );
@@ -78,7 +78,7 @@ const EditWorkspaceForm = ({
   const onSubmit = (values: z.infer<typeof updateWorkspceSchema>) => {
     const finalValues = {
       ...values,
-      image: values.image instanceof File ? values.image : undefined,
+      image: values.image instanceof File ? values.image : "",
     };
 
     mutate(
@@ -90,7 +90,6 @@ const EditWorkspaceForm = ({
         },
       }
     );
-    //console.log(values);
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -190,7 +189,7 @@ const EditWorkspaceForm = ({
                               size={"sm"}
                               className="w-fit mt-2"
                               onClick={() => {
-                                field.onChange(null);
+                                field.onChange("");
                                 if (inputRef.current) {
                                   inputRef.current.value = "";
                                 }
@@ -205,7 +204,9 @@ const EditWorkspaceForm = ({
                               variant={"destructive"}
                               size={"sm"}
                               className="w-fit mt-2"
-                              onClick={() => inputRef.current?.click()}
+                              onClick={() => {
+                                inputRef.current?.click();
+                              }}
                             >
                               Upload Image
                             </Button>
@@ -249,11 +250,14 @@ const EditWorkspaceForm = ({
               className="mt-6 w-fit ml-auto"
               size={"sm"}
               type="button"
-              disabled={isPending}
+              disabled={isDeletingWorkspace || isPending}
               onClick={handleDelete}
               variant={"destructive"}
             >
               Delete Workspace
+              {isDeletingWorkspace && (
+                <Loader className="size-4 animate-spin text-muted-foreground" />
+              )}
             </Button>
           </div>
         </CardContent>
