@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 import { cn } from "@/lib/utils";
 
-import { SettingsIcon, UserIcon } from "lucide-react";
+import { SettingsIcon, UsersIcon } from "lucide-react";
 import {
   GoCheckCircle,
   GoCheckCircleFill,
@@ -31,8 +31,8 @@ const routes = [
   {
     label: "Members",
     herf: "/members",
-    icon: UserIcon,
-    activeIcon: UserIcon,
+    icon: UsersIcon,
+    activeIcon: UsersIcon,
   },
   {
     label: "Settings",

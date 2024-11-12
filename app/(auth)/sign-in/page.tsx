@@ -6,7 +6,7 @@ import React from "react";
 const SignInPage = async () => {
   const user = await getCurrent();
 
-  if (user) redirect("/");
+  if (user) redirect("/dashboard");
 
   return (
     <div className="flex w-full h-full justify-center items-center">

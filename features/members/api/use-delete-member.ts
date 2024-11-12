@@ -6,22 +6,21 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 type ResponseType = InferResponseType<
-  (typeof client.api.workspaces)[":workspaceId"]["$patch"],
+  (typeof client.api.members)[":memberId"]["$delete"],
   200
 >;
 
 type RequestType = InferRequestType<
-  (typeof client.api.workspaces)[":workspaceId"]["$patch"]
+  (typeof client.api.members)[":memberId"]["$delete"]
 >;
 
-export const useUpdateWorkspace = () => {
+export const useDeleteMember = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
 
   const mutation = useMutation<ResponseType, Error, RequestType>({
-    mutationFn: async ({ form, param }) => {
-      const response = await client.api.workspaces[":workspaceId"]["$patch"]({
-        form,
+    mutationFn: async ({ param }) => {
+      const response = await client.api.members[":memberId"]["$delete"]({
         param,
       });
 
@@ -32,17 +31,16 @@ export const useUpdateWorkspace = () => {
 
       return await response.json();
     },
-    onSuccess: ({ data }) => {
+    onSuccess: () => {
       router.refresh();
-      toast.success("Workspace updated successfully");
-      queryClient.invalidateQueries({ queryKey: ["workspaces"] });
-      queryClient.invalidateQueries({ queryKey: ["workspace", data.$id] });
+      toast.success("Member deleted successfully");
+      queryClient.invalidateQueries({ queryKey: ["members"] });
     },
     onError: ({ message }) => {
       if (message) {
         toast.error(message);
       } else {
-        toast.error("Failed to update workspace");
+        toast.error("Failed to delete member");
       }
     },
     // Additional options like retry, delay, etc. can be added here.

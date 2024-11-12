@@ -27,7 +27,8 @@ export const useResetInviteCode = () => {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to reset invite code");
+        const { error } = (await response.json()) as { error: string };
+        throw new Error(error);
       }
 
       return await response.json();
@@ -38,8 +39,12 @@ export const useResetInviteCode = () => {
       queryClient.invalidateQueries({ queryKey: ["workspaces"] });
       queryClient.invalidateQueries({ queryKey: ["workspace", data.$id] });
     },
-    onError: () => {
-      toast.error("Failed to reset invite code");
+    onError: ({ message }) => {
+      if (message) {
+        toast.error(message);
+      } else {
+        toast.error("Failed to reset invite Code");
+      }
     },
     // Additional options like retry, delay, etc. can be added here.
   });

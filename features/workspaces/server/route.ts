@@ -99,7 +99,7 @@ const app = new Hono()
       });
 
       if (!member || member.role !== MemberRole.ADMIN) {
-        return c.json({ error: "Unauthorized" }, 401);
+        return c.json({ error: "Unauthorized to update the workspace" }, 401);
       }
 
       let uploadImageUrl: string | undefined;
@@ -138,7 +138,7 @@ const app = new Hono()
     });
 
     if (!member || member.role !== MemberRole.ADMIN) {
-      return c.json({ error: "Unauthorized" }, 401);
+      return c.json({ error: "Unauthorized to delete the workspace" }, 401);
     }
 
     await databases.deleteDocument(DATABASE_ID, WORKSPACES_ID, workspaceId);
@@ -157,7 +157,7 @@ const app = new Hono()
     });
 
     if (!member || member.role !== MemberRole.ADMIN) {
-      return c.json({ error: "Unauthorized" }, 401);
+      return c.json({ error: "Unauthorized to reset the workspace" }, 401);
     }
 
     const workspace = await databases.updateDocument(

@@ -25,7 +25,8 @@ export const useDeleteWorkspace = () => {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to delete workspace");
+        const { error } = (await response.json()) as { error: string };
+        throw new Error(error);
       }
 
       return await response.json();
@@ -36,8 +37,12 @@ export const useDeleteWorkspace = () => {
       queryClient.invalidateQueries({ queryKey: ["workspaces"] });
       queryClient.invalidateQueries({ queryKey: ["workspace", data.$id] });
     },
-    onError: () => {
-      toast.error("Failed to delete workspace");
+    onError: ({ message }) => {
+      if (message) {
+        toast.error(message);
+      } else {
+        toast.error("Failed to delete workspace");
+      }
     },
     // Additional options like retry, delay, etc. can be added here.
   });

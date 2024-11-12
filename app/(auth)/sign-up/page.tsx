@@ -6,7 +6,7 @@ import React from "react";
 const SignUpPage = async () => {
   const user = await getCurrent();
 
-  if (user) redirect("/");
+  if (user) redirect("/dashboard");
   return (
     <div className="w-full h-full flex justify-center items-center">
       <SignUpCard />
