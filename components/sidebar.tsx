@@ -3,6 +3,7 @@ import Logo from "./logo";
 import DotteSeparator from "./dotted-separator";
 import Navigation from "./Navigation";
 import WorkspaceSwitcher from "./workspace-switcher";
+import ProjectSwitcher from "./projects-switcher";
 
 const Sidebar = () => {
   return (
@@ -12,6 +13,8 @@ const Sidebar = () => {
       <WorkspaceSwitcher />
       <DotteSeparator className="my-4" />
       <Navigation />
+      <DotteSeparator className="my-4" />
+      <ProjectSwitcher />
     </aside>
   );
 };
