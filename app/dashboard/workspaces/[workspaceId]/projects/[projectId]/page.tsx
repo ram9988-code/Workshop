@@ -7,6 +7,7 @@ import { getCurrent } from "@/features/auth/queries";
 import { getProject } from "@/features/projects/queries";
 import ProjectAvatar from "@/features/projects/components/Project-Avatar";
 import { Skeleton } from "@/components/ui/skeleton";
+import TaskViewSwitcher from "@/features/tasks/components/task-view-switcher";
 
 interface ProjectIdPageProps {
   params: { projectId: string };
@@ -35,16 +36,17 @@ const ProjectIdPage = async ({ params }: ProjectIdPageProps) => {
           <p className="text-lg font-semibold">{initialValues.name}</p>
         </div>
         <div>
-          <Button asChild variant={"secondary"} size={"sm"}>
+          <Button asChild variant={"outline"} size={"sm"}>
             <Link
               href={`/dashboard/workspaces/${initialValues.workspaceId}/projects/${initialValues.$id}/settings`}
             >
-              <PencilIcon className="size-4 mr-4" />
+              <PencilIcon className="size-4" />
               Edit Project
             </Link>
           </Button>
         </div>
       </div>
+      <TaskViewSwitcher />
     </div>
   );
 };
