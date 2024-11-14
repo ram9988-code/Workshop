@@ -14,6 +14,7 @@ import {
 import WorkspaceAvatar from "@/features/workspaces/components/workspace-avatar";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 import { useCreateWorkspaceModal } from "@/features/workspaces/hooks/use-create-workspace-modal";
+import { Skeleton } from "./ui/skeleton";
 
 const WorkspaceSwitcher = () => {
   const { open, close } = useCreateWorkspaceModal();

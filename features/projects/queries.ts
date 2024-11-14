@@ -3,32 +3,27 @@ import { getMember } from "../members/utils";
 import { Project } from "./types";
 import { DATABASE_ID, PROJECTS_ID } from "@/config";
 
-interface GetWorkspaceId {
+interface GetProjectId {
   projectId: string;
 }
 
-export const getProject = async ({ projectId }: GetWorkspaceId) => {
-  try {
-    const { account, databases } = await createSessionClient();
-    const user = await account.get();
+export const getProject = async ({ projectId }: GetProjectId) => {
+  const { account, databases } = await createSessionClient();
+  const user = await account.get();
 
-    const project = await databases.getDocument<Project>(
-      DATABASE_ID,
-      PROJECTS_ID,
-      projectId
-    );
+  const project = await databases.getDocument<Project>(
+    DATABASE_ID,
+    PROJECTS_ID,
+    projectId
+  );
 
-    const member = await getMember({
-      databases,
-      userId: user.$id,
-      workspaceId: project.workspaceId,
-    });
+  const member = await getMember({
+    databases,
+    userId: user.$id,
+    workspaceId: project.workspaceId,
+  });
 
-    if (!member) return null;
+  if (!member) throw new Error("Unauthorized");
 
-    return project;
-  } catch (err: any) {
-    console.log(`Failed to excute credentials ${err.message}`);
-    return null;
-  }
+  return project;
 };

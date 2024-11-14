@@ -51,7 +51,9 @@ export const getWorkspace = async ({ workspaceId }: GetWorkspaceId) => {
       workspaceId,
     });
 
-    if (!member) return null;
+    if (!member) {
+      throw new Error("Unauthorized access");
+    }
 
     const workspace = await databases.getDocument<Workspace>(
       DATABASE_ID,
@@ -70,17 +72,12 @@ interface GetWorkspaceInfoId {
 }
 
 export const getWorkspaceInfo = async ({ workspaceId }: GetWorkspaceInfoId) => {
-  try {
-    const { databases } = await createSessionClient();
+  const { databases } = await createSessionClient();
 
-    const workspace = await databases.getDocument<Workspace>(
-      DATABASE_ID,
-      WORKSPACES_ID,
-      workspaceId
-    );
-    return { name: workspace.name };
-  } catch (err: any) {
-    console.log(`Failed to excute credentials ${err.message}`);
-    return null;
-  }
+  const workspace = await databases.getDocument<Workspace>(
+    DATABASE_ID,
+    WORKSPACES_ID,
+    workspaceId
+  );
+  return { name: workspace.name };
 };

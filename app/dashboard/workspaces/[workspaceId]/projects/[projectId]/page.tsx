@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { getCurrent } from "@/features/auth/queries";
 import { getProject } from "@/features/projects/queries";
 import ProjectAvatar from "@/features/projects/components/Project-Avatar";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface ProjectIdPageProps {
   params: { projectId: string };
