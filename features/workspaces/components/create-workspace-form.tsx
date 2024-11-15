@@ -26,6 +26,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import { createWorkspceSchema } from "../schema";
 import { useCreateWorkspace } from "../api/use-create-workspace";
+import { DatePicker } from "@/components/date-picker";
 
 interface CreateWorkspaceFormProps {
   onCancel?: () => void;

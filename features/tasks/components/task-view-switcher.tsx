@@ -5,9 +5,11 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { useCreateTaskModal } from "../hooks/use-create-task-modal";
+import CreateTaskForm from "./create-task-form";
 
 const TaskViewSwitcher = () => {
   const { open } = useCreateTaskModal();
+
   return (
     <Tabs className="flex-1 w-full border rounded-lg">
       <div className="h-full flex flex-col overflow-auto p-4">

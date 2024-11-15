@@ -26,7 +26,7 @@ const CreateTaskModalWrapper = ({ onCancel }: CreateTaskModalWrapperProps) => {
     name: project.name,
     imageUrl: project.imageUrl,
   }));
-  const membersOptions = projects?.documents.map((member) => ({
+  const membersOptions = members?.documents.map((member) => ({
     id: member.$id,
     name: member.name,
   }));
@@ -48,13 +48,11 @@ const CreateTaskModalWrapper = ({ onCancel }: CreateTaskModalWrapperProps) => {
   }
 
   return (
-    <div>
-      <CreateTaskForm
-        onCancel={close}
-        membersOptions={membersOptions}
-        projectsOptions={projectsOptions}
-      />
-    </div>
+    <CreateTaskForm
+      onCancel={onCancel}
+      membersOptions={membersOptions}
+      projectsOptions={projectsOptions}
+    />
   );
 };
 
