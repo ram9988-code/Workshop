@@ -1,15 +1,17 @@
 "use client";
 
 import { z } from "zod";
+import Link from "next/link";
+import { Loader } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
-import DotteSeparator from "@/components/dotted-separator";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import DotteSeparator from "@/components/dotted-separator";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import React from "react";
 import {
   Form,
@@ -18,10 +20,9 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import Link from "next/link";
+
 import { loginSchema } from "../schema";
 import { useLogin } from "../api/use-login";
-import { Loader } from "lucide-react";
 
 const SignInCard = () => {
   const { mutate, isPending } = useLogin();

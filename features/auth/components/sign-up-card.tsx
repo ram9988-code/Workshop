@@ -1,12 +1,16 @@
 "use client";
 
 import { z } from "zod";
-
+import Link from "next/link";
+import { Loader } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 import { useForm } from "react-hook-form";
-import DotteSeparator from "@/components/dotted-separator";
+
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { zodResolver } from "@hookform/resolvers/zod";
+import DotteSeparator from "@/components/dotted-separator";
 import {
   Card,
   CardContent,
@@ -14,10 +18,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import React from "react";
-import Link from "next/link";
-import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
   FormControl,
@@ -25,9 +25,9 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
+
 import { SignUpSchema } from "../schema";
 import { useRegister } from "../api/use-register";
-import { Loader } from "lucide-react";
 
 const SignUpCard = () => {
   const { mutate, isPending } = useRegister();

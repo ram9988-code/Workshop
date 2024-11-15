@@ -1,9 +1,10 @@
 import React from "react";
+
 import Logo from "./logo";
-import DotteSeparator from "./dotted-separator";
 import Navigation from "./Navigation";
-import WorkspaceSwitcher from "./workspace-switcher";
+import DotteSeparator from "./dotted-separator";
 import ProjectSwitcher from "./projects-switcher";
+import WorkspaceSwitcher from "./workspace-switcher";
 
 const Sidebar = () => {
   return (

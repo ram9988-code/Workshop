@@ -1,7 +1,8 @@
-import { Button } from "@/components/ui/button";
-import { Medal } from "lucide-react";
-import Link from "next/link";
 import React from "react";
+import Link from "next/link";
+import { Medal } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
 
 const MarketingPage = () => {
   return (

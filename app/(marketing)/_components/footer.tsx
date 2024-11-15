@@ -1,6 +1,7 @@
+import React from "react";
+
 import Logo from "@/components/logo";
 import { Button } from "@/components/ui/button";
-import React from "react";
 
 export const Footer = () => {
   return (

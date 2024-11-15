@@ -1,9 +1,12 @@
 "use client";
 import React from "react";
-import { RiAddCircleFill } from "react-icons/ri";
 import { useRouter } from "next/navigation";
+import { RiAddCircleFill } from "react-icons/ri";
 
+import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
+import WorkspaceAvatar from "@/features/workspaces/components/workspace-avatar";
 import { useGetWorkspaces } from "@/features/workspaces/api/use-get-workspaces";
+import { useCreateWorkspaceModal } from "@/features/workspaces/hooks/use-create-workspace-modal";
 import {
   Select,
   SelectContent,
@@ -11,10 +14,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
-import WorkspaceAvatar from "@/features/workspaces/components/workspace-avatar";
-import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
-import { useCreateWorkspaceModal } from "@/features/workspaces/hooks/use-create-workspace-modal";
-import { Skeleton } from "./ui/skeleton";
 
 const WorkspaceSwitcher = () => {
   const { open, close } = useCreateWorkspaceModal();

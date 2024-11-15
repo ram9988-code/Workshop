@@ -1,17 +1,19 @@
 "use client";
-import React from "react";
-import { Loader, LogOut } from "lucide-react";
 
-import { useCurrent } from "../api/use-current";
+import React from "react";
+import { LogOut } from "lucide-react";
+
+import DotteSeparator from "@/components/dotted-separator";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
-import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
-import DotteSeparator from "@/components/dotted-separator";
+
 import { useLogout } from "../api/use-logout";
+import { useCurrent } from "../api/use-current";
 
 const UserButton = () => {
   const { data: user, isLoading } = useCurrent();

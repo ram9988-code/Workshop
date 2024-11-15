@@ -1,13 +1,13 @@
 "use client";
 
-import Link from "next/link";
 import React from "react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { SettingsIcon, UsersIcon } from "lucide-react";
 
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 import { cn } from "@/lib/utils";
 
-import { SettingsIcon, UsersIcon } from "lucide-react";
 import {
   GoCheckCircle,
   GoCheckCircleFill,

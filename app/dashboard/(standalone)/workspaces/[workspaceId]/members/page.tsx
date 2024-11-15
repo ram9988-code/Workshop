@@ -1,7 +1,8 @@
+import React from "react";
+import { redirect } from "next/navigation";
+
 import { getCurrent } from "@/features/auth/queries";
 import MembersList from "@/features/workspaces/components/members-list";
-import { redirect } from "next/navigation";
-import React from "react";
 
 const MembersPage = async () => {
   const user = await getCurrent();

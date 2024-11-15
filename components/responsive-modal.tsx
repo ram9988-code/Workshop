@@ -1,7 +1,7 @@
 import { useMedia } from "react-use";
 
-import { Dialog, DialogContent, DialogTitle } from "./ui/dialog";
 import { Drawer, DrawerContent } from "./ui/drawer";
+import { Dialog, DialogContent, DialogTitle } from "./ui/dialog";
 
 interface ResponsiveModalProps {
   children: React.ReactNode;

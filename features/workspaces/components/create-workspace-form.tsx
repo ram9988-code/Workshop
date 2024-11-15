@@ -1,16 +1,18 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import Image from "next/image";
 import React, { useRef } from "react";
 import { useForm } from "react-hook-form";
-import Image from "next/image";
-import { z } from "zod";
-import { AvatarFallback } from "@radix-ui/react-avatar";
-import { ImageIcon, Loader } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { ImageIcon, Loader } from "lucide-react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { AvatarFallback } from "@radix-ui/react-avatar";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import DotteSeparator from "@/components/dotted-separator";
+import { cn } from "@/lib/utils";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Avatar } from "@/components/ui/avatar";
 import {
   Form,
   FormControl,
@@ -19,10 +21,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Avatar } from "@/components/ui/avatar";
-import { cn } from "@/lib/utils";
+import DotteSeparator from "@/components/dotted-separator";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import { createWorkspceSchema } from "../schema";
 import { useCreateWorkspace } from "../api/use-create-workspace";

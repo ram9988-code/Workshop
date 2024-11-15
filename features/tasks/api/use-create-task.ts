@@ -5,33 +5,33 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { client } from "@/lib/rpc";
 
-type ResponseType = InferResponseType<(typeof client.api.auth.login)["$post"]>;
+type ResponseType = InferResponseType<(typeof client.api.tasks)["$post"]>;
 
-type RequestType = InferRequestType<(typeof client.api.auth.login)["$post"]>;
+type RequestType = InferRequestType<(typeof client.api.tasks)["$post"]>;
 
-export const useLogin = () => {
+export const useCreateTask = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
 
   const mutation = useMutation<ResponseType, Error, RequestType>({
     mutationFn: async ({ json }) => {
-      const response = await client.api.auth.login["$post"]({ json });
+      const response = await client.api.tasks["$post"]({ json });
 
       if (!response.ok) {
-        throw new Error("Failed to login");
+        throw new Error("Failed to create task");
       }
 
       return await response.json();
     },
     onSuccess: () => {
-      toast.success("Login successful");
       router.refresh();
-      queryClient.invalidateQueries({ queryKey: ["current"] });
+      toast.success("Task is created");
+      queryClient.invalidateQueries({ queryKey: ["tasks"] });
     },
     onError: () => {
-      toast.error("Failed to login");
-      //console.error(error);
+      toast.error("Failed to create task");
     },
+    // Additional options like retry, delay, etc. can be added here.
   });
   return mutation;
 };

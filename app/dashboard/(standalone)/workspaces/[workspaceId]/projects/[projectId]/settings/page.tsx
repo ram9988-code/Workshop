@@ -1,8 +1,9 @@
+import React from "react";
+import { redirect } from "next/navigation";
+
 import { getCurrent } from "@/features/auth/queries";
 import EditProjectForm from "@/features/projects/components/edit-project-form";
 import { getProject } from "@/features/projects/queries";
-import { redirect } from "next/navigation";
-import React from "react";
 
 interface ProjectSettingPageProps {
   params: {

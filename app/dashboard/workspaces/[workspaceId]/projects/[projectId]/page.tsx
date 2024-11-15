@@ -1,12 +1,11 @@
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import { PencilIcon } from "lucide-react";
+import { redirect } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { getCurrent } from "@/features/auth/queries";
 import { getProject } from "@/features/projects/queries";
 import ProjectAvatar from "@/features/projects/components/Project-Avatar";
-import { Skeleton } from "@/components/ui/skeleton";
 import TaskViewSwitcher from "@/features/tasks/components/task-view-switcher";
 
 interface ProjectIdPageProps {

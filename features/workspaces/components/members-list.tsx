@@ -1,18 +1,20 @@
 "use client";
-import { Fragment } from "react";
+
 import Link from "next/link";
+import { Fragment } from "react";
 import { ArrowLeftIcon, MoreVerticalIcon } from "lucide-react";
 
+import useConfirm from "@/hooks/use-confirm";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { MemberRole } from "@/features/members/types";
+import MemberAvatar from "@/features/members/components/member-avatar";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   useDeleteMember,
   useGetMembers,
   useUpdateMember,
 } from "@/features/members/api";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import MemberAvatar from "@/features/members/components/member-avatar";
-import { Separator } from "@/components/ui/separator";
-import { MemberRole } from "@/features/members/types";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,7 +23,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { useWorkspaceId } from "../hooks/use-workspace-id";
-import useConfirm from "@/hooks/use-confirm";
 
 const MembersList = () => {
   const workspaceId = useWorkspaceId();
