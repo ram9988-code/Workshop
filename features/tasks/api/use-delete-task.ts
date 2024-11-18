@@ -1,27 +1,26 @@
-import { toast } from "sonner";
-import { useRouter } from "next/navigation";
-import { InferRequestType, InferResponseType } from "hono";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { InferRequestType, InferResponseType } from "hono";
 
 import { client } from "@/lib/rpc";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 type ResponseType = InferResponseType<
-  (typeof client.api.projects)[":projectId"]["$patch"],
+  (typeof client.api.tasks)[":taskId"]["$delete"],
   200
 >;
 
 type RequestType = InferRequestType<
-  (typeof client.api.projects)[":projectId"]["$patch"]
+  (typeof client.api.tasks)[":taskId"]["$delete"]
 >;
 
-export const useUpdateProject = () => {
+export const useDeleteTask = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
 
   const mutation = useMutation<ResponseType, Error, RequestType>({
-    mutationFn: async ({ form, param }) => {
-      const response = await client.api.projects[":projectId"]["$patch"]({
-        form,
+    mutationFn: async ({ param }) => {
+      const response = await client.api.tasks[":taskId"]["$delete"]({
         param,
       });
 
@@ -34,17 +33,18 @@ export const useUpdateProject = () => {
     },
     onSuccess: ({ data }) => {
       router.refresh();
-      toast.success("Project updated success");
-      queryClient.invalidateQueries({ queryKey: ["projects"] });
-      queryClient.invalidateQueries({ queryKey: ["project", data.$id] });
+      toast.success("Task deleted successfully");
+      queryClient.invalidateQueries({ queryKey: ["tasks"] });
+      queryClient.invalidateQueries({ queryKey: ["task", data.$id] });
     },
     onError: ({ message }) => {
       if (message) {
         toast.error(message);
       } else {
-        toast.error("Failed to update project");
+        toast.error("Failed to delete project");
       }
     },
+    // Additional options like retry, delay, etc. can be added here.
   });
   return mutation;
 };

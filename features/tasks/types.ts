@@ -13,6 +13,7 @@ export type Task = Models.Document & {
   status: TaskStatus;
   assigneeId: string;
   projectId: string;
+  workspaceId: string;
   position: string;
   dueDate: string;
   description?: string;

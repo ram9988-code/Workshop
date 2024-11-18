@@ -58,7 +58,7 @@ const TaskViewSwitcher = () => {
         </div>
         <>
           <TabsContent value="table" className="mt-0">
-            <DataTable columns={columns} data={tasks ?? []} />
+            <DataTable columns={columns} data={tasks?.data ?? []} />
           </TabsContent>
           <TabsContent value="kanban" className="mt-0">
             Data kanban
