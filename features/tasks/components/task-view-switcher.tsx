@@ -6,8 +6,10 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 
+import { columns } from "./columns";
 import { useGetTasks } from "../api";
 import DataFilters from "./data-filters";
+import { DataTable } from "./data-table";
 import { useTaskFilters } from "../hooks/use-task-filters";
 import { useCreateTaskModal } from "../hooks/use-create-task-modal";
 
@@ -51,10 +53,12 @@ const TaskViewSwitcher = () => {
             New
           </Button>
         </div>
-        <DataFilters />
+        <div className="my-2">
+          <DataFilters />
+        </div>
         <>
           <TabsContent value="table" className="mt-0">
-            Data table
+            <DataTable columns={columns} data={tasks ?? []} />
           </TabsContent>
           <TabsContent value="kanban" className="mt-0">
             Data kanban
@@ -64,7 +68,6 @@ const TaskViewSwitcher = () => {
           </TabsContent>
         </>
       </div>
-      {JSON.stringify(tasks)}
     </Tabs>
   );
 };
