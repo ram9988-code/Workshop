@@ -1,17 +1,38 @@
 "use client";
+import { useQueryState } from "nuqs";
 import { PlusIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 
+import { useGetTasks } from "../api";
+import DataFilters from "./data-filters";
+import { useTaskFilters } from "../hooks/use-task-filters";
 import { useCreateTaskModal } from "../hooks/use-create-task-modal";
-import CreateTaskForm from "./create-task-form";
 
 const TaskViewSwitcher = () => {
+  const [view, setView] = useQueryState("task-view", { defaultValue: "table" });
+  const workspaceId = useWorkspaceId();
+  const [{ assigneeId, dueDate, projectId, search, status }, setFilters] =
+    useTaskFilters();
+
+  const { data: tasks, isLoading: isLoadingTasks } = useGetTasks({
+    workspaceId,
+    assigneeId,
+    dueDate,
+    projectId,
+    search,
+    status,
+  });
   const { open } = useCreateTaskModal();
 
   return (
-    <Tabs className="flex-1 w-full border rounded-lg">
+    <Tabs
+      defaultValue={view}
+      onValueChange={setView}
+      className="flex-1 w-full border rounded-lg"
+    >
       <div className="h-full flex flex-col overflow-auto p-4">
         <div className="flex flex-col gap-y-2 lg:flex-row justify-between items-center">
           <TabsList className="w-full lg:w-auto">
@@ -30,6 +51,7 @@ const TaskViewSwitcher = () => {
             New
           </Button>
         </div>
+        <DataFilters />
         <>
           <TabsContent value="table" className="mt-0">
             Data table
@@ -42,6 +64,7 @@ const TaskViewSwitcher = () => {
           </TabsContent>
         </>
       </div>
+      {JSON.stringify(tasks)}
     </Tabs>
   );
 };

@@ -2,7 +2,6 @@
 
 import { z } from "zod";
 import { Loader } from "lucide-react";
-import React, { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -55,21 +54,21 @@ const CreateTaskForm = ({
     resolver: zodResolver(createTaskSchema.omit({ workspaceId: true })),
     defaultValues: {
       name: "",
-      dueDate: new Date(),
       workspaceId,
     },
   });
 
   const onSubmit = (values: z.infer<typeof createTaskSchema>) => {
-    // mutate(
-    //   { json: { ...values, workspaceId } },
-    //   {
-    //     onSuccess: ({}) => {
-    //       form.reset();
-    //     },
-    //   }
-    // );
-    console.log(values);
+    mutate(
+      { json: { ...values, workspaceId } },
+      {
+        onSuccess: ({}) => {
+          form.reset();
+          onCancel?.();
+        },
+      }
+    );
+    // console.log(values);
   };
 
   return (
