@@ -1,10 +1,14 @@
+"use client";
 import React from "react";
 import Link from "next/link";
 import { Medal } from "lucide-react";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 import { Button } from "@/components/ui/button";
+import { useTest } from "@/hooks/use-test";
 
 const MarketingPage = () => {
+  const { onChange, latitude, longitude } = useTest();
   return (
     <div className="flex items-center justify-center flex-col">
       <div className="flex items-center justify-center flex-col">
@@ -25,7 +29,7 @@ const MarketingPage = () => {
         it all with Workshop.
       </div>
       <Button className="mt-6" size={"lg"} asChild>
-        <Link href={"/sign-up"}>Get Workshop</Link>
+        <Button onClick={onChange}>Get Workshop</Button>
       </Button>
     </div>
   );

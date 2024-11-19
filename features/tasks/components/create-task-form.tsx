@@ -34,6 +34,8 @@ import {
 import { TaskStatus } from "../types";
 import { useCreateTask } from "../api";
 import { createTaskSchema } from "../shemas";
+import { useCreateTaskModal } from "../hooks/use-create-task-modal";
+import { useProjectId } from "@/features/workspaces/hooks/use-project-id";
 
 interface CreateTaskFormProps {
   onCancel?: () => void;
@@ -48,13 +50,17 @@ const CreateTaskForm = ({
 }: CreateTaskFormProps) => {
   const router = useRouter();
   const workspaceId = useWorkspaceId();
+  const projectId = useProjectId();
   const { mutate, isPending } = useCreateTask();
+  const { status } = useCreateTaskModal();
 
   const form = useForm<z.infer<typeof createTaskSchema>>({
     resolver: zodResolver(createTaskSchema.omit({ workspaceId: true })),
     defaultValues: {
       name: "",
       workspaceId,
+      status: status as TaskStatus,
+      projectId: projectId,
     },
   });
 
@@ -68,7 +74,6 @@ const CreateTaskForm = ({
         },
       }
     );
-    // console.log(values);
   };
 
   return (
@@ -142,6 +147,8 @@ const CreateTaskForm = ({
                   </FormItem>
                 )}
               />
+
+              {/* Status Selection */}
               <FormField
                 control={form.control}
                 name="status"
@@ -175,6 +182,7 @@ const CreateTaskForm = ({
                   </FormItem>
                 )}
               />
+              {/* Project Selection */}
               <FormField
                 control={form.control}
                 name="projectId"

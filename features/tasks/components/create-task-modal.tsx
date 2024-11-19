@@ -8,7 +8,10 @@ import { useCreateTaskModal } from "../hooks/use-create-task-modal";
 const CreateTaskModal = () => {
   const { isOpen, setIsOpen, close } = useCreateTaskModal();
   return (
-    <ResponsiveModal open={isOpen} onOpenChange={setIsOpen}>
+    <ResponsiveModal
+      open={isOpen}
+      onOpenChange={() => setIsOpen({ createTask: !isOpen, status: "" })}
+    >
       <CreateTaskModalWrapper onCancel={close} />
     </ResponsiveModal>
   );
