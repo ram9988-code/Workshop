@@ -8,3 +8,5 @@ export { useDeleteTask } from "./use-delete-task";
 export { useUpdateTask } from "./use-update-task";
 
 export { useGetTask } from "./use-get-task";
+
+export { useBulkUpdateTasks } from "./use-bulk-update-tasks";

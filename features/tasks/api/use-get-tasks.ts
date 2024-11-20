@@ -2,7 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 
 import { client } from "@/lib/rpc";
 import { TaskStatus } from "../types";
-import { Models } from "node-appwrite";
 
 interface UseGetTasksProps {
   workspaceId: string;
@@ -47,7 +46,7 @@ export const useGetTasks = ({
         throw new Error("Failed to get workspace");
       }
 
-      const data = await response.json();
+      const { data } = await response.json();
 
       return data;
     },

@@ -24,7 +24,7 @@ const TaskDate = ({ value, className }: TaskDateProps) => {
   }
 
   return (
-    <div className={cn("truncate", textColor)}>
+    <div className={cn("truncate", textColor, className)}>
       <span>{format(value, "PPP")}</span>
     </div>
   );
