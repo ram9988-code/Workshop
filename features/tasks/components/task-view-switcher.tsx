@@ -16,6 +16,7 @@ import { useCreateTaskModal } from "../hooks/use-create-task-modal";
 
 import DataKanban from "./data-kanban";
 import DataFilters from "./data-filters";
+import DataCalendar from "./data-calendar";
 
 const TaskViewSwitcher = () => {
   const [view, setView] = useQueryState("task-view", { defaultValue: "table" });
@@ -39,7 +40,7 @@ const TaskViewSwitcher = () => {
     (tasks: { $id: string; status: TaskStatus; position: number }[]) => {
       bulkUpdate({ json: { tasks } });
     },
-    []
+    [bulkUpdate]
   );
   return (
     <Tabs
@@ -79,8 +80,8 @@ const TaskViewSwitcher = () => {
           <TabsContent value="kanban" className="mt-0">
             <DataKanban data={tasks ?? []} onChange={onKanbanChange} />
           </TabsContent>
-          <TabsContent value="calender" className="mt-0">
-            Data calender
+          <TabsContent value="calender" className="mt-0 h-full pb-5">
+            <DataCalendar data={tasks ?? []} />
           </TabsContent>
         </>
       </div>
