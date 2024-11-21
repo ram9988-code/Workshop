@@ -18,7 +18,8 @@ export const useGetTask = ({ taskId }: UseGetTaskProps) => {
       if (!response.ok) {
         throw new Error("Failed to get workspace");
       }
-      return response.json();
+      const { data } = await response.json();
+      return data;
     },
     refetchInterval: 60 * 1000, // Refresh every minute
   });

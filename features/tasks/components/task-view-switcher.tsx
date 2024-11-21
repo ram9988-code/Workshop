@@ -18,7 +18,10 @@ import DataKanban from "./data-kanban";
 import DataFilters from "./data-filters";
 import DataCalendar from "./data-calendar";
 
-const TaskViewSwitcher = () => {
+interface TaskViewSwitcherProps {
+  hideProjectFilter?: boolean;
+}
+const TaskViewSwitcher = ({ hideProjectFilter }: TaskViewSwitcherProps) => {
   const [view, setView] = useQueryState("task-view", { defaultValue: "table" });
   const workspaceId = useWorkspaceId();
   const [{ assigneeId, dueDate, projectId, search, status }, setFilters] =
@@ -71,7 +74,7 @@ const TaskViewSwitcher = () => {
           </Button>
         </div>
         <div className="my-2">
-          <DataFilters />
+          <DataFilters hideProjectFilter={hideProjectFilter} />
         </div>
         <>
           <TabsContent value="table" className="mt-0">

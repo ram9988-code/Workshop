@@ -57,6 +57,7 @@ const DataFilters = ({ hideProjectFilter }: DataFilterProps) => {
 
   return (
     <div className="flex flex-row lg:flow-col gap-2">
+      {/* Status Filter */}
       <Select
         defaultValue={status ?? undefined}
         onValueChange={(value) => onStatusChanged(value)}
@@ -77,6 +78,7 @@ const DataFilters = ({ hideProjectFilter }: DataFilterProps) => {
           <SelectItem value={TaskStatus.DONE}>Done</SelectItem>
         </SelectContent>
       </Select>
+      {/* Assignee Filters */}
       <Select
         defaultValue={assigneeId ?? undefined}
         onValueChange={(value) => onAssigneeChanged(value)}
@@ -97,26 +99,30 @@ const DataFilters = ({ hideProjectFilter }: DataFilterProps) => {
           ))}
         </SelectContent>
       </Select>
-      <Select
-        defaultValue={projectId ?? undefined}
-        onValueChange={(value) => onProjectChanged(value)}
-      >
-        <SelectTrigger className="w-full lg:w-auto h-8">
-          <div className="flex items-center pr-2">
-            <FolderIcon className="size-4 mr-2" />
-            <SelectValue placeholder="All Projects" />
-          </div>
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="all">All Projects</SelectItem>
-          <SelectSeparator />
-          {projectOptions?.map((project) => (
-            <SelectItem key={project.value} value={project.value}>
-              {project.label}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+      {/* Project Filters */}
+      {hideProjectFilter && (
+        <Select
+          defaultValue={projectId ?? undefined}
+          onValueChange={(value) => onProjectChanged(value)}
+        >
+          <SelectTrigger className="w-full lg:w-auto h-8">
+            <div className="flex items-center pr-2">
+              <FolderIcon className="size-4 mr-2" />
+              <SelectValue placeholder="All Projects" />
+            </div>
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All Projects</SelectItem>
+            <SelectSeparator />
+            {projectOptions?.map((project) => (
+              <SelectItem key={project.value} value={project.value}>
+                {project.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      )}
+      {/* Date Filter */}
       <DatePicker
         placeholder="Due Date"
         className="h-8 w-full lg:w-auto"

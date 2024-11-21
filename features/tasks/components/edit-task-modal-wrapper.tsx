@@ -58,7 +58,7 @@ const EditTaskModalWrapper = ({ onCancel, id }: EditTaskModalWrapperProps) => {
       onCancel={onCancel}
       membersOptions={membersOptions}
       projectsOptions={projectsOptions}
-      initialValue={task.data}
+      initialValue={task}
     />
   );
 };

@@ -35,7 +35,7 @@ import { TaskStatus } from "../types";
 import { useCreateTask } from "../api";
 import { createTaskSchema } from "../shemas";
 import { useCreateTaskModal } from "../hooks/use-create-task-modal";
-import { useProjectId } from "@/features/workspaces/hooks/use-project-id";
+import { useProjectId } from "@/features/projects/hooks/use-project-id";
 
 interface CreateTaskFormProps {
   onCancel?: () => void;

@@ -24,7 +24,7 @@ const routes = [
   },
   {
     label: "My Task",
-    herf: "/task",
+    herf: "/tasks",
     icon: GoCheckCircle,
     activeIcon: GoCheckCircleFill,
   },
