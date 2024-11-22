@@ -33,6 +33,7 @@ import {
   useResetInviteCode,
   useUpdateWorkspace,
 } from "../api";
+import { useCurrent } from "@/features/auth/api/use-current";
 
 interface EditWorkspaceFormProps {
   onCancel?: () => void;
@@ -44,6 +45,7 @@ const EditWorkspaceForm = ({
   initialValues,
 }: EditWorkspaceFormProps) => {
   const router = useRouter();
+  const { data: user } = useCurrent();
   const { mutate, isPending } = useUpdateWorkspace();
   const { mutate: resetInviteCode, isPending: isResettingInviteCode } =
     useResetInviteCode();
@@ -303,29 +305,31 @@ const EditWorkspaceForm = ({
           </div>
         </CardContent>
       </Card>
-      <Card className="w-full h-full border-none shadow-none">
-        <CardContent className="p-7">
-          <div className="flex flex-col">
-            <h3 className="font-bold">Danger Zone</h3>
-            <p className="text-sm text-muted-foreground">
-              Delete a workspace is irreversible and will be removed all Data
-            </p>
-            <Button
-              className="mt-6 w-fit ml-auto"
-              size={"sm"}
-              type="button"
-              disabled={isDeletingWorkspace || isPending}
-              onClick={handleDelete}
-              variant={"destructive"}
-            >
-              Delete Workspace
-              {isDeletingWorkspace && (
-                <Loader className="size-4 animate-spin text-muted-foreground" />
-              )}
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+      {initialValues.userId === user?.$id && (
+        <Card className="w-full h-full border-none shadow-none">
+          <CardContent className="p-7">
+            <div className="flex flex-col">
+              <h3 className="font-bold">Danger Zone</h3>
+              <p className="text-sm text-muted-foreground">
+                Delete a workspace is irreversible and will be removed all Data
+              </p>
+              <Button
+                className="mt-6 w-fit ml-auto"
+                size={"sm"}
+                type="button"
+                disabled={isDeletingWorkspace || isPending}
+                onClick={handleDelete}
+                variant={"destructive"}
+              >
+                Delete Workspace
+                {isDeletingWorkspace && (
+                  <Loader className="size-4 animate-spin text-muted-foreground" />
+                )}
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 };

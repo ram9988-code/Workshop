@@ -23,6 +23,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { useWorkspaceId } from "../hooks/use-workspace-id";
+import { useCurrent } from "@/features/auth/api/use-current";
+import PageError from "@/components/page-error";
 
 const MembersList = () => {
   const workspaceId = useWorkspaceId();
@@ -31,6 +33,7 @@ const MembersList = () => {
     "This member will be removed from the workspace",
     "destructive"
   );
+  const { data: user } = useCurrent();
 
   const { data } = useGetMembers({ workspaceId });
   const { mutate: deleteMember, isPending: isDeleteMember } = useDeleteMember();
@@ -53,7 +56,7 @@ const MembersList = () => {
     );
   };
 
-  if (!data) return null;
+  if (!data || !user) return <PageError message="Member not found" />;
 
   return (
     <Card className="w-full h-full border-none shadow-none">
@@ -83,46 +86,47 @@ const MembersList = () => {
               <div className="ml-auto">
                 <p className="text-blue-400">{member.role}</p>
               </div>
-              {member.role === MemberRole.MEMBER && (
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button
-                      className="ml-2"
-                      variant={"secondary"}
-                      size={"icon"}
-                    >
-                      <MoreVerticalIcon className="size-4 text-muted-foreground" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent side="bottom" align="end">
-                    <DropdownMenuItem
-                      className="font-medium"
-                      onClick={() =>
-                        handleUpdateMember(member.$id, MemberRole.ADMIN)
-                      }
-                      disabled={isUpdateMember}
-                    >
-                      Set as Administrator
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      className="font-medium"
-                      onClick={() =>
-                        handleUpdateMember(member.$id, MemberRole.MEMBER)
-                      }
-                      disabled={isUpdateMember}
-                    >
-                      Set as Member
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      className="font-medium text-amber-700"
-                      onClick={() => handleDeleteMember(member.$id)}
-                      disabled={isDeleteMember}
-                    >
-                      Remove {member.name}
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              )}
+              {member.role === MemberRole.MEMBER &&
+                member.userId !== user.$id && (
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button
+                        className="ml-2"
+                        variant={"secondary"}
+                        size={"icon"}
+                      >
+                        <MoreVerticalIcon className="size-4 text-muted-foreground" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent side="bottom" align="end">
+                      <DropdownMenuItem
+                        className="font-medium"
+                        onClick={() =>
+                          handleUpdateMember(member.$id, MemberRole.ADMIN)
+                        }
+                        disabled={isUpdateMember}
+                      >
+                        Set as Administrator
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        className="font-medium"
+                        onClick={() =>
+                          handleUpdateMember(member.$id, MemberRole.MEMBER)
+                        }
+                        disabled={isUpdateMember}
+                      >
+                        Set as Member
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        className="font-medium text-amber-700"
+                        onClick={() => handleDeleteMember(member.$id)}
+                        disabled={isDeleteMember}
+                      >
+                        Remove {member.name}
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                )}
             </div>
             {index < data.documents.length - 1 && (
               <Separator className="my-2.5" />

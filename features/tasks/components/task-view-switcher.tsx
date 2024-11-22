@@ -17,6 +17,7 @@ import { useCreateTaskModal } from "../hooks/use-create-task-modal";
 import DataKanban from "./data-kanban";
 import DataFilters from "./data-filters";
 import DataCalendar from "./data-calendar";
+import { useProjectId } from "@/features/projects/hooks/use-project-id";
 
 interface TaskViewSwitcherProps {
   hideProjectFilter?: boolean;
@@ -24,14 +25,16 @@ interface TaskViewSwitcherProps {
 const TaskViewSwitcher = ({ hideProjectFilter }: TaskViewSwitcherProps) => {
   const [view, setView] = useQueryState("task-view", { defaultValue: "table" });
   const workspaceId = useWorkspaceId();
-  const [{ assigneeId, dueDate, projectId, search, status }, setFilters] =
+  const projectId = useProjectId();
+  const [{ assigneeId, dueDate, projectId: id, search, status }, setFilters] =
     useTaskFilters();
 
+  const projId = projectId ? projectId : id;
   const { data: tasks, isLoading: isLoadingTasks } = useGetTasks({
     workspaceId,
     assigneeId,
     dueDate,
-    projectId,
+    projectId: projId,
     search,
     status,
   });

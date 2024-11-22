@@ -20,7 +20,7 @@ export const useGetWorkspace = ({ workspaceId }: useGetWorkspaceProps) => {
 
       return data;
     },
-    refetchInterval: 60 * 1000, // Refresh every minute
+    //refetchInterval: 60 * 1000, // Refresh every minute
   });
   return query;
 };

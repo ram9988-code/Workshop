@@ -69,7 +69,7 @@ const app = new Hono()
       userId: user.$id,
     });
 
-    if (!member || member.role !== MemberRole.ADMIN) {
+    if (!member) {
       return c.json({ error: "Unauthorized to view the workspace" }, 401);
     }
 
