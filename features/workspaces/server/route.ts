@@ -14,6 +14,7 @@ import { createWorkspceSchema, updateWorkspceSchema } from "../schema";
 import { Workspace } from "../types";
 
 const app = new Hono()
+  //Get all Workspaces
   .get("/", sessionMiddleware, async (c) => {
     const user = c.get("user");
     const databases = c.get("databases");
@@ -35,6 +36,51 @@ const app = new Hono()
     );
     return c.json({ data: workspaces });
   })
+
+  //Get workspace information
+  .get("/:workspaceId/info", sessionMiddleware, async (c) => {
+    const databases = c.get("databases");
+    const { workspaceId } = c.req.param();
+
+    const workspace = await databases.getDocument<Workspace>(
+      DATABASE_ID,
+      WORKSPACES_ID,
+      workspaceId
+    );
+
+    return c.json({
+      data: {
+        $id: workspace.$id,
+        name: workspace.name,
+        imageUrl: workspace.imageUrl,
+      },
+    });
+  })
+
+  //Get a single Workspace
+  .get("/:workspaceId", sessionMiddleware, async (c) => {
+    const databases = c.get("databases");
+    const user = c.get("user");
+    const { workspaceId } = c.req.param();
+
+    const member = await getMember({
+      databases,
+      workspaceId,
+      userId: user.$id,
+    });
+
+    if (!member || member.role !== MemberRole.ADMIN) {
+      return c.json({ error: "Unauthorized to view the workspace" }, 401);
+    }
+
+    const workspace = await databases.getDocument<Workspace>(
+      DATABASE_ID,
+      WORKSPACES_ID,
+      workspaceId
+    );
+    return c.json({ data: workspace });
+  })
+  //Create a new workspace
   .post(
     "/",
     zValidator("form", createWorkspceSchema),
@@ -80,6 +126,8 @@ const app = new Hono()
       return c.json({ data: workspace });
     }
   )
+
+  //Update the workspace
   .patch(
     "/:workspaceId",
     sessionMiddleware,
@@ -125,6 +173,8 @@ const app = new Hono()
       return c.json({ data: workspace });
     }
   )
+
+  //Delete the workspace
   .delete("/:workspaceId", sessionMiddleware, async (c) => {
     const databases = c.get("databases");
     const user = c.get("user");
@@ -144,6 +194,8 @@ const app = new Hono()
     await databases.deleteDocument(DATABASE_ID, WORKSPACES_ID, workspaceId);
     return c.json({ data: { $id: workspaceId } });
   })
+
+  //Reset invite Code for workspace
   .post("/:workspaceId/reset-invite-code", sessionMiddleware, async (c) => {
     const databases = c.get("databases");
     const user = c.get("user");
@@ -171,6 +223,8 @@ const app = new Hono()
 
     return c.json({ data: workspace });
   })
+
+  //Join the workspace using invite code
   .post(
     "/:workspaceId/join",
     sessionMiddleware,

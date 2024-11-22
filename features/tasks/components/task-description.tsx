@@ -10,12 +10,20 @@ interface TaskDescriptionProps {
 }
 const TaskDescription = ({ task }: TaskDescriptionProps) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [value, setValue] = useState(task.description);
+  const [value, setValue] = useState(task.description ?? "");
 
   const { mutate, isPending } = useUpdateTask();
 
   const handleSave = () => {
-    mutate({ json: { description: value }, param: { taskId: task.$id } });
+    mutate(
+      { json: { description: value }, param: { taskId: task.$id } },
+      {
+        onSuccess: () => {
+          setIsEditing(false);
+          setValue(task.description ?? "");
+        },
+      }
+    );
   };
   return (
     <div className="p-4 border rounded-lg">

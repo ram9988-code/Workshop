@@ -94,6 +94,8 @@ const EditProjectForm = ({
     }
   };
 
+  console.log(initialValues);
+
   return (
     <div className="flex flex-col gap-y-4">
       <DeleteDialog />
@@ -106,7 +108,9 @@ const EditProjectForm = ({
               onCancel
                 ? onCancel
                 : () =>
-                    router.push(`/dashboard/workspaces/${initialValues.$id}`)
+                    router.push(
+                      `/dashboard/workspaces/${initialValues.workspaceId}`
+                    )
             }
           >
             <ArrowLeftIcon className="size-4 mr-2" />

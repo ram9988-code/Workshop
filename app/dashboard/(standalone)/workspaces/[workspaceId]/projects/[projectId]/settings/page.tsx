@@ -2,28 +2,14 @@ import React from "react";
 import { redirect } from "next/navigation";
 
 import { getCurrent } from "@/features/auth/queries";
-import EditProjectForm from "@/features/projects/components/edit-project-form";
-import { getProject } from "@/features/projects/queries";
 
-interface ProjectSettingPageProps {
-  params: {
-    projectId: string;
-  };
-}
+import ProjectEditPageClient from "./client";
 
-const ProjectSettingPage = async ({ params }: ProjectSettingPageProps) => {
-  const { projectId } = await params;
-
+const ProjectSettingPage = async () => {
   const user = await getCurrent();
   if (!user) redirect("/sign-in");
 
-  const initialValues = await getProject({ projectId: projectId });
-
-  return (
-    <div className="w-full lg:max-w-xl">
-      <EditProjectForm initialValues={initialValues} />
-    </div>
-  );
+  return <ProjectEditPageClient />;
 };
 
 export default ProjectSettingPage;

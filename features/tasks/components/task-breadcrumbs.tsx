@@ -33,7 +33,7 @@ const TaskBreadcrumbs = ({ project, task }: TaskBreadcrumbsProps) => {
       { param: { taskId: task.$id } },
       {
         onSuccess: () => {
-          router.push(`/dashboard/workspace/${workspaceId}/tasks`);
+          router.push(`/dashboard/workspaces/${workspaceId}/tasks`);
         },
       }
     );

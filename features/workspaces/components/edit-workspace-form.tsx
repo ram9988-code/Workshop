@@ -45,10 +45,10 @@ const EditWorkspaceForm = ({
 }: EditWorkspaceFormProps) => {
   const router = useRouter();
   const { mutate, isPending } = useUpdateWorkspace();
-  const { mutate: deleteMutation, isPending: isDeletingWorkspace } =
-    useDeleteWorkspace();
   const { mutate: resetInviteCode, isPending: isResettingInviteCode } =
     useResetInviteCode();
+  const { mutate: deleteMutation, isPending: isDeletingWorkspace } =
+    useDeleteWorkspace();
 
   const [DeleteDialog, confirmDelete] = useConfirm(
     "Delete Workspace",

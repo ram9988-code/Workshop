@@ -9,17 +9,17 @@ import { useTaskId } from "@/features/tasks/hooks/use-task-id";
 
 export const TaskIdClient = () => {
   const taskId = useTaskId();
-  const { data, isLoading } = useGetTask({ taskId });
+  const { data, isLoading, error } = useGetTask({ taskId });
 
-  if (isLoading) {
-    <PageLoader />;
+  if (isLoading || !data) {
+    return <PageLoader />;
   }
-  if (!data) {
-    return <PageError message="Task not found" />;
-  }
+
+  console.log(error);
+
   return (
     <div className="flex flex-col">
-      <TaskBreadcrumbs project={data?.project} task={data} />
+      <TaskBreadcrumbs project={data.project} task={data} />
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <TaskOverView task={data} />
       </div>

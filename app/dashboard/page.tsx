@@ -14,10 +14,6 @@ const Dashboard = async () => {
   } else {
     redirect(`/dashboard/workspaces/${workspaces?.documents[0].$id}`);
   }
-
-  // return (
-  //   <div className="flex items-center justify-center flex-col">Workspace</div>
-  // );
 };
 
 export default Dashboard;

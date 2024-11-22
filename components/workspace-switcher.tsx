@@ -16,7 +16,7 @@ import {
 } from "./ui/select";
 
 const WorkspaceSwitcher = () => {
-  const { open, close } = useCreateWorkspaceModal();
+  const { open } = useCreateWorkspaceModal();
   const workspaceId = useWorkspaceId();
   const router = useRouter();
   const { data } = useGetWorkspaces();
@@ -24,6 +24,7 @@ const WorkspaceSwitcher = () => {
   const onSelect = (id: string) => {
     router.push(`/dashboard/workspaces/${id}`);
   };
+
   return (
     <div className="flx flex-col gap-y-2">
       <div className="flex justify-between items-center mb-2">

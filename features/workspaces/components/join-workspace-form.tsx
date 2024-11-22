@@ -16,7 +16,7 @@ import { useWorkspaceId } from "../hooks/use-workspace-id";
 import { useInviteCode } from "../hooks/use-invite-code";
 
 interface JoinWorkspaceFormProps {
-  initialValue: { name: string };
+  initialValue: { $id: string; name: string; imageUrl: string };
 }
 const JoinWorkspaceForm = ({ initialValue }: JoinWorkspaceFormProps) => {
   const router = useRouter();

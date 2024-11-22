@@ -68,13 +68,12 @@ const EditTaskForm = ({
     mutate(
       { json: values, param: { taskId: initialValue.$id } },
       {
-        onSuccess: ({}) => {
+        onSuccess: () => {
           form.reset();
           onCancel?.();
         },
       }
     );
-    // console.log(values);
   };
 
   return (

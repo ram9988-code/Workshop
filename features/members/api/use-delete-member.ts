@@ -1,5 +1,4 @@
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
 import { InferRequestType, InferResponseType } from "hono";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
@@ -15,7 +14,6 @@ type RequestType = InferRequestType<
 >;
 
 export const useDeleteMember = () => {
-  const router = useRouter();
   const queryClient = useQueryClient();
 
   const mutation = useMutation<ResponseType, Error, RequestType>({
@@ -32,7 +30,6 @@ export const useDeleteMember = () => {
       return await response.json();
     },
     onSuccess: () => {
-      router.refresh();
       toast.success("Member deleted successfully");
       queryClient.invalidateQueries({ queryKey: ["members"] });
     },

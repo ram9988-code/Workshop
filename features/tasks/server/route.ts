@@ -66,7 +66,7 @@ const app = new Hono()
       });
 
       if (!member) {
-        return c.json({ error: "Unauthorized" });
+        return c.json({ error: "Unauthorized" }, 401);
       }
 
       const query = [
@@ -231,7 +231,7 @@ const app = new Hono()
       );
 
       if (!existingTask) {
-        return c.json({ error: "Task not found" });
+        return c.json({ error: "Task not found" }, 401);
       }
 
       const member = await getMember({
@@ -241,7 +241,7 @@ const app = new Hono()
       });
 
       if (!member) {
-        return c.json({ error: "Unauthorized" });
+        return c.json({ error: "Unauthorized" }, 401);
       }
 
       const task = await databases.updateDocument(
@@ -261,6 +261,7 @@ const app = new Hono()
       return c.json({ data: task });
     }
   )
+  //Get Task
   .get("/:taskId", sessionMiddleware, async (c) => {
     const currentUser = c.get("user");
     const databases = c.get("databases");

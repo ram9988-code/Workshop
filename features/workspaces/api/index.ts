@@ -12,3 +12,5 @@ export { useResetInviteCode } from "./use-reset-invite-code";
 
 //Join a workspace
 export { useJoinWorkspace } from "./use-join-workspace";
+
+export { useGetWorkspaceInfo } from "./use-get-workspaceInfo";

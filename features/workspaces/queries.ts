@@ -5,9 +5,6 @@ import { Query } from "node-appwrite";
 import { createSessionClient } from "@/lib/appwrite";
 import { DATABASE_ID, MEMBERS_ID, WORKSPACES_ID } from "@/config";
 
-import { Workspace } from "./types";
-import { getMember } from "../members/utils";
-
 export const getWorkspaces = async () => {
   try {
     const { account, databases } = await createSessionClient();
@@ -34,50 +31,4 @@ export const getWorkspaces = async () => {
     console.log(`Failed to excute credentials ${err.message}`);
     return null;
   }
-};
-
-interface GetWorkspaceId {
-  workspaceId: string;
-}
-
-export const getWorkspace = async ({ workspaceId }: GetWorkspaceId) => {
-  try {
-    const { account, databases } = await createSessionClient();
-    const user = await account.get();
-
-    const member = await getMember({
-      databases,
-      userId: user.$id,
-      workspaceId,
-    });
-
-    if (!member) {
-      throw new Error("Unauthorized access");
-    }
-
-    const workspace = await databases.getDocument<Workspace>(
-      DATABASE_ID,
-      WORKSPACES_ID,
-      workspaceId
-    );
-    return workspace;
-  } catch (err: any) {
-    console.log(`Failed to excute credentials ${err.message}`);
-    return null;
-  }
-};
-
-interface GetWorkspaceInfoId {
-  workspaceId: string;
-}
-
-export const getWorkspaceInfo = async ({ workspaceId }: GetWorkspaceInfoId) => {
-  const { databases } = await createSessionClient();
-
-  const workspace = await databases.getDocument<Workspace>(
-    DATABASE_ID,
-    WORKSPACES_ID,
-    workspaceId
-  );
-  return { name: workspace.name };
 };

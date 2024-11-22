@@ -15,7 +15,6 @@ type RequestType = InferRequestType<
 >;
 
 export const useJoinWorkspace = () => {
-  const router = useRouter();
   const queryClient = useQueryClient();
 
   const mutation = useMutation<ResponseType, Error, RequestType>({
@@ -35,7 +34,6 @@ export const useJoinWorkspace = () => {
       return await response.json();
     },
     onSuccess: ({ data }) => {
-      router.refresh();
       toast.success("Joined workspace");
       queryClient.invalidateQueries({ queryKey: ["workspaces"] });
       queryClient.invalidateQueries({ queryKey: ["workspace", data.$id] });

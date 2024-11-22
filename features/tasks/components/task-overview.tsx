@@ -40,7 +40,7 @@ const TaskOverView = ({ task }: TaskOverViewProps) => {
           <OverviewProperty label="Due Date">
             <TaskDate value={task.dueDate} className="text-sm font-medium" />
           </OverviewProperty>
-          <OverviewProperty label={task.status}>
+          <OverviewProperty label={"Status"}>
             <Badge variant={task.status}>
               {snakeCaseToTitleCase(task.status)}
             </Badge>

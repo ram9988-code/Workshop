@@ -1,5 +1,4 @@
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
 import { InferRequestType, InferResponseType } from "hono";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
@@ -10,7 +9,6 @@ type ResponseType = InferResponseType<(typeof client.api.tasks)["$post"], 200>;
 type RequestType = InferRequestType<(typeof client.api.tasks)["$post"]>;
 
 export const useCreateTask = () => {
-  const router = useRouter();
   const queryClient = useQueryClient();
 
   const mutation = useMutation<ResponseType, Error, RequestType>({
@@ -24,7 +22,6 @@ export const useCreateTask = () => {
       return await response.json();
     },
     onSuccess: () => {
-      router.refresh();
       toast.success("Task is created");
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
     },
