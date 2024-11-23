@@ -54,7 +54,7 @@ const EditWorkspaceForm = ({
 
   const [DeleteDialog, confirmDelete] = useConfirm(
     "Delete Workspace",
-    "This action will delete the workspace",
+    "Warning: Deleting this workspace will erase all associated projects and tasks permanently. Proceed with caution.",
     "destructive"
   );
 
@@ -258,7 +258,13 @@ const EditWorkspaceForm = ({
                   >
                     Cancel
                   </Button>
-                  <Button type="submit" size={"lg"} disabled={isPending}>
+                  <Button
+                    type="submit"
+                    size={"lg"}
+                    disabled={
+                      isPending || isResettingInviteCode || isDeletingWorkspace
+                    }
+                  >
                     Save Changes{" "}
                     {isPending && (
                       <Loader className="size-4 animate-spin text-muted-foreground" />
@@ -298,7 +304,7 @@ const EditWorkspaceForm = ({
               variant={"outline"}
             >
               Reset Invite Link
-              {isDeletingWorkspace && (
+              {isResettingInviteCode && (
                 <Loader className="size-4 animate-spin text-muted-foreground" />
               )}
             </Button>

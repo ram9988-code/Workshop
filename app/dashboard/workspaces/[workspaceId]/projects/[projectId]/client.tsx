@@ -3,23 +3,50 @@ import React from "react";
 import Link from "next/link";
 import { PencilIcon } from "lucide-react";
 
+import Analytics from "@/components/analytics";
 import { Button } from "@/components/ui/button";
 import PageError from "@/components/page-error";
 import PageLoader from "@/components/page-loader";
-import { useGetProject } from "@/features/projects/api";
 import { useProjectId } from "@/features/projects/hooks/use-project-id";
 import ProjectAvatar from "@/features/projects/components/Project-Avatar";
+import { useGetProject, useGetProjectAnalytics } from "@/features/projects/api";
 import TaskViewSwitcher from "@/features/tasks/components/task-view-switcher";
 
 const ProjectIdClient = () => {
+  /**
+   * Retrieves the project ID using a custom hook.
+   * @returns The project ID.
+   */
   const projectId = useProjectId();
+  /**
+   * Fetches project data using the projectId and manages loading state.
+   * @param {string} projectId - The unique identifier of the project to fetch.
+   * @returns An object containing the project data and a boolean indicating if the data is still loading.
+   */
   const { data, isLoading } = useGetProject({ projectId });
+  /**
+   * Fetches project analytics data using the projectId and sets the data and loading state.
+   * @param {string} projectId - The unique identifier of the project to fetch analytics for.
+   * @returns Object containing the analytics data and loading state.
+   */
+  const { data: analyticsData, isLoading: isLoadingAnalytics } =
+    useGetProjectAnalytics({ projectId });
 
-  if (isLoading) {
+  /**
+   * Renders a PageLoader component if isLoading is true.
+   * @param {boolean} isLoading - A flag indicating whether the page is still loading.
+   * @returns {JSX.Element} - The PageLoader component if isLoading is true, otherwise null.
+   */
+  if (isLoading || isLoadingAnalytics) {
     return <PageLoader />;
   }
 
-  if (!data) {
+  /**
+   * Checks if the data is falsy, and if so, returns a PageError component with the message "Project Not Found".
+   * @param {any} data - The data to check for existence.
+   * @returns {JSX.Element} - Either a PageError component or null.
+   */
+  if (!data || !analyticsData) {
     return <PageError message="Project Not Found" />;
   }
   return (
@@ -44,6 +71,7 @@ const ProjectIdClient = () => {
           </Button>
         </div>
       </div>
+      {analyticsData && <Analytics data={analyticsData} />}
       <TaskViewSwitcher />
     </div>
   );
